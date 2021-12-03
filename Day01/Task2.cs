@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AdventOfCode.Common;
 
-namespace AdventOfCode._01
+namespace AdventOfCode.Day01
 {
     /// <summary>
     /// --- Part Two ---
@@ -46,19 +42,19 @@ namespace AdventOfCode._01
     ///
     ///Consider sums of a three-measurement sliding window. How many sums are larger than the previous sum?
     /// </summary>
-    public static class _01_2
+    public static class Task2
     {
         public static int GetIncreasedDepthValueAmountX3()
         {
-            var lines = Helpers.ReadFile();
+            var lines = CommonHelpers.ReadInstructions("Day01\\input.txt");
 
-            List<string> threeMeasurementLines = new List<string>();
-            for (int i = 2; i < lines.Count; i++)
+            var threeMeasurementLines = new List<string>();
+            for (var i = 2; i < lines.Count; i++)
             {
                 var x = int.Parse(lines[i-2]) + int.Parse(lines[i-1]) + int.Parse(lines[i]);
                 threeMeasurementLines.Add(x.ToString());
             }
-            return _01_1.GetIncreasedDepthCount(threeMeasurementLines);
+            return Task1.GetIncreasedDepthCount(threeMeasurementLines);
         }
     }
 }

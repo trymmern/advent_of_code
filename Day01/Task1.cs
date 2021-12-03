@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AdventOfCode.Common;
 
-namespace AdventOfCode._01
+namespace AdventOfCode.Day01
 {
     /// <summary>
     /// --- Day 1: Sonar Sweep ---
@@ -57,14 +53,11 @@ namespace AdventOfCode._01
     ///
     ///How many measurements are larger than the previous measurement?
     /// </summary>
-    public static class _01_1
+    public static class Task1
     {
         public static int GetIncreasedDepthCount(List<string>? values = null)
         {
-            if (values == null)
-            {
-                values = Helpers.ReadFile();
-            }
+            values ??= CommonHelpers.ReadInstructions("Day01\\input.txt");
 
             return GetIncreasedDepthValueCount(values);
         }
@@ -72,9 +65,9 @@ namespace AdventOfCode._01
         private static int GetIncreasedDepthValueCount(List<string> values)
         {
             
-            int count = 0;
+            var count = 0;
 
-            for (int i = 1; i < values.Count; i++)
+            for (var i = 1; i < values.Count; i++)
             {
                 if (int.Parse(values[i]) > int.Parse(values[i - 1]))
                 {
