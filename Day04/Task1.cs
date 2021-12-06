@@ -74,19 +74,18 @@ namespace AdventOfCode.Day04
             var inputs = CommonHelpers.ReadBingoNumbers("Day04\\input.txt");
             var boards = CommonHelpers.GetBingoBoards("Day04\\input.txt");
 
-            foreach (var input in inputs)
+            foreach (var board in inputs.SelectMany(input => boards))
             {
-                foreach (var board in boards)
+                for (var i = 0; i < board.GetLength(0); i++)
                 {
-                    for (var i = 0; i < board.Rows.Count; i++)
+                    for (var j = 0; j < board.GetLength(1); j++)
                     {
-                        var row = board.Rows[i];
 
                     }
                 }
             }
-        }
 
-        
+            return 0;
+        }
     }
 }

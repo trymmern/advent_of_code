@@ -4,52 +4,47 @@
     {
         public static List<string> ReadInstructions(string path)
         {
-            return File.ReadAllLines($"{AppContext.BaseDirectory}\\..\\..\\..\\{path}").ToList();
+            return File.ReadAllLines($"{AppContext.BaseDirectory}..\\..\\..\\{path}").ToList();
         }
 
         public static List<int> ReadBingoNumbers(string path)
         {
-            return File.ReadLines(path).Select(x => int.Parse(x)).ToList();
+            var numbers = File.ReadAllLines($"{AppContext.BaseDirectory}..\\..\\..\\{path}").Skip(0).Take(1).First();
+            return numbers.Split(',').Select(int.Parse).ToList();
         }
 
         public static List<int[,]> GetBingoBoards(string path)
         {
-            var counter = 0;
             var rowCount = 0;
             var boards = new List<int[,]>();
-            var board = new int[,] { };
-            foreach (string line in File.ReadLines($"{AppContext.BaseDirectory}\\..\\..\\..\\{path}"))
+            var board = new int[5,5];
+            foreach (var line in File.ReadAllLines($"{AppContext.BaseDirectory}..\\..\\..\\{path}").Skip(2))
             {
-                if (counter > 0)
-                    continue;
-
-                var row = line.Split(' ').Select(x => int.Parse(x)).ToArray();
+                var row = line.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
 
                 if (row.Length < 1)
                     continue;
 
-                board[rowCount, ] = ;
-                
-                if (rows.Count == 5)
-                {
-                    boards.Add(new Board { Rows = rows});
-                    rows.Clear();
-                }
+                AddRowToBoard(board, row, rowCount);
 
-                counter++;
+                if (board[4,4] != 0)
+                {
+                    rowCount = 0;
+                    boards.Add(board);
+                    board = new int[5,5];
+                }
+                rowCount++;
             }
 
             return boards;
         }
 
-        public struct Board
+        private static void AddRowToBoard(int[,] board, int[] row, int rowNum)
         {
-            public List<Row> Rows;
-        }
-
-        public struct Row
-        {
-            public List<{}> Numbers;
+            for (var i = 0; i < row.Length; i++)
+            {
+                board[rowNum, i] = row[i];
+            }
         }
     }
 }

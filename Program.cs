@@ -46,6 +46,10 @@
                     Console.WriteLine($"Result: {Day03.Task1.GetPowerConsumption()} \n\n");
                     Console.WriteLine($"Result: {Day03.Task2.GetLifeSupportRating()} \n\n");
                     break;
+                case "4 -a":
+                    Console.WriteLine($"Result: {Day04.Task1.GetFinalBingoScore()} \n\n");
+                    //Console.WriteLine($"Result: {Day04.Task2.GetLifeSupportRating()} \n\n");
+                    break;
                 default:
                     throw new InvalidOperationException("Not a valid input");
             }
