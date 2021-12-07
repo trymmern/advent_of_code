@@ -73,19 +73,105 @@ namespace AdventOfCode.Day04
         {
             var inputs = CommonHelpers.ReadBingoNumbers("Day04\\input.txt");
             var boards = CommonHelpers.GetBingoBoards("Day04\\input.txt");
+            CommonHelpers.ExpandedInt[,]? winningBoard = null;
+            var currentNum = inputs[0];
 
-            foreach (var board in inputs.SelectMany(input => boards))
+            foreach (var input in inputs)
             {
-                for (var i = 0; i < board.GetLength(0); i++)
-                {
-                    for (var j = 0; j < board.GetLength(1); j++)
-                    {
+                currentNum = input;
 
+                foreach (var board in boards)
+                {
+                    for (var i = 0; i < board.GetLength(0); i++)
+                    {
+                        for (var j = 0; j < board.GetLength(1); j++)
+                        {
+                            if (board[i, j].num == input && !board[i, j].marked)
+                            {
+                                board[i, j].marked = true;
+                            }
+                        }
                     }
+
+                    if (CheckHorizontals(board) || CheckVerticals(board))
+                    {
+                        winningBoard = board;
+                        break;
+                    }
+                }
+
+                if (winningBoard != null) break;
+            }
+
+            if (winningBoard != null)
+                return CalculateFinalScore(winningBoard, currentNum);
+            else
+                return 0;
+        }
+
+        private static bool CheckHorizontals(CommonHelpers.ExpandedInt[,] board)
+        {
+            var isFullRow = false;
+            for (var i = 0; i < board.GetLength(0); i++)
+            {
+                var row = GetRow(board, i);
+
+                if (row.All(x => x.marked))
+                {
+                    Console.WriteLine($"We have a winner row:");
+                    row.ToList().ForEach(n => Console.WriteLine(n.num));
+                    isFullRow = true;
+                    break;
                 }
             }
 
-            return 0;
+            return isFullRow;
+        }
+
+        private static bool CheckVerticals(CommonHelpers.ExpandedInt[,] board)
+        {
+            var isFullColumn = false;
+            for (var i = 0; i < board.GetLength(1); i++)
+            {
+                var column = GetColumn(board, i);
+
+                if (column.All(x => x.marked))
+                {
+                    Console.WriteLine($"We have a winner column:");
+                    column.ToList().ForEach(n => Console.WriteLine(n.num));
+                    isFullColumn = true;
+                    break;
+                }
+            }
+
+            return isFullColumn;
+        }
+
+        public static CommonHelpers.ExpandedInt[] GetColumn(CommonHelpers.ExpandedInt[,] matrix, int columnNumber)
+        {
+            return Enumerable.Range(0, matrix.GetLength(0))
+                    .Select(x => matrix[x, columnNumber])
+                    .ToArray();
+        }
+
+        public static CommonHelpers.ExpandedInt[] GetRow(CommonHelpers.ExpandedInt[,] matrix, int rowNumber)
+        {
+            return Enumerable.Range(0, matrix.GetLength(1))
+                    .Select(x => matrix[rowNumber, x])
+                    .ToArray();
+        }
+
+        private static int CalculateFinalScore(CommonHelpers.ExpandedInt[,] board, int currentNum)
+        {
+            var sumOfUnmarked = 0;
+
+            foreach (var elem in board)
+            {
+                if (!elem.marked) 
+                    sumOfUnmarked += elem.num;
+            }
+
+            return sumOfUnmarked * currentNum;
         }
     }
 }
