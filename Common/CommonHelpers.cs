@@ -23,7 +23,10 @@
                 var row = line.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
 
                 if (row.Length < 1)
+                {
+                    rowCount = 0;
                     continue;
+                }
 
                 AddRowToBoard(board, row, rowCount);
 

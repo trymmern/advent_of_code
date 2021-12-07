@@ -1,4 +1,5 @@
-﻿using AdventOfCode.Common;
+﻿using System;
+using AdventOfCode.Common;
 
 namespace AdventOfCode.Day04
 {
@@ -86,11 +87,14 @@ namespace AdventOfCode.Day04
                     {
                         for (var j = 0; j < board.GetLength(1); j++)
                         {
+                            Console.Write($"{board[i, j].num.ToString(), 2} ");
+
                             if (board[i, j].num == input && !board[i, j].marked)
                             {
                                 board[i, j].marked = true;
                             }
                         }
+                        Console.WriteLine("\n");
                     }
 
                     if (CheckHorizontals(board) || CheckVerticals(board))
@@ -98,6 +102,8 @@ namespace AdventOfCode.Day04
                         winningBoard = board;
                         break;
                     }
+
+                    Console.WriteLine("\n\n");
                 }
 
                 if (winningBoard != null) break;
@@ -118,8 +124,8 @@ namespace AdventOfCode.Day04
 
                 if (row.All(x => x.marked))
                 {
-                    Console.WriteLine($"We have a winner row:");
-                    row.ToList().ForEach(n => Console.WriteLine(n.num));
+                    Console.WriteLine("We have a winner row:");
+                    row.ToList().ForEach(n => Console.WriteLine(n.num.ToString(), 2));
                     isFullRow = true;
                     break;
                 }
@@ -137,8 +143,8 @@ namespace AdventOfCode.Day04
 
                 if (column.All(x => x.marked))
                 {
-                    Console.WriteLine($"We have a winner column:");
-                    column.ToList().ForEach(n => Console.WriteLine(n.num));
+                    Console.WriteLine("We have a winner column:");
+                    column.ToList().ForEach(n => Console.Write(n.num));
                     isFullColumn = true;
                     break;
                 }
