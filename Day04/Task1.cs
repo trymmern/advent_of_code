@@ -109,10 +109,7 @@ namespace AdventOfCode.Day04
                 if (winningBoard != null) break;
             }
 
-            if (winningBoard != null)
-                return CalculateFinalScore(winningBoard, currentNum);
-            else
-                return 0;
+            return winningBoard != null ? CalculateFinalScore(winningBoard, currentNum) : 0;
         }
 
         private static bool CheckHorizontals(CommonHelpers.ExpandedInt[,] board)
