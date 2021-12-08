@@ -18,10 +18,6 @@
                     if (task == "2") 
                         Console.WriteLine($"Result: {Day01.Task2.GetIncreasedDepthValueAmountX3()} \n\n");
                     break;
-                case "1 -a":
-                    Console.WriteLine($"\nResult: {Day01.Task1.GetIncreasedDepthCount()} \n\n");
-                    Console.WriteLine($"\nResult: {Day01.Task2.GetIncreasedDepthValueAmountX3()} \n\n");
-                    break;
                 case "2":
                     Console.WriteLine("Choose task (type '1' or '2')");
                     task = Console.ReadLine();
@@ -29,10 +25,6 @@
                         Console.WriteLine($"\nResult: {Day02.Task1.GetFinalPosition()} \n\n");
                     if (task == "2")
                         Console.WriteLine($"\nResult: {Day02.Task2.GetFinalPosition()} \n\n");
-                    break;
-                case "2 -a":
-                    Console.WriteLine($"\nResult: {Day02.Task1.GetFinalPosition()} \n\n");
-                    Console.WriteLine($"\nResult: {Day02.Task2.GetFinalPosition()} \n\n");
                     break;
                 case "3":
                     Console.WriteLine("Choose task (type '1' or '2')");
@@ -42,10 +34,6 @@
                     if (task == "2")
                         Console.WriteLine($"\nResult: {Day03.Task2.GetLifeSupportRating()} \n\n");
                     break;
-                case "3 -a":
-                    Console.WriteLine($"\nResult: {Day03.Task1.GetPowerConsumption()} \n\n");
-                    Console.WriteLine($"\nResult: {Day03.Task2.GetLifeSupportRating()} \n\n");
-                    break;
                 case "4":
                     Console.WriteLine("Choose task (type '1' or '2')");
                     task = Console.ReadLine();
@@ -54,9 +42,13 @@
                     if (task == "2")
                         Console.WriteLine($"\nResult: {Day04.Task2.GetFinalScoreOfLastWinningBoard()} \n\n");
                     break;
-                case "4 -a":
-                    Console.WriteLine($"\nResult: {Day04.Task1.GetFinalBingoScore()} \n\n");
-                    Console.WriteLine($"\nResult: {Day04.Task2.GetFinalScoreOfLastWinningBoard()} \n\n");
+                case "5":
+                    Console.WriteLine("Choose task (type '1' or '2')");
+                    task = Console.ReadLine();
+                    if (task == "1")
+                        Console.WriteLine($"\nResult: {Day05.Task1.GetNumberOfOverlappingPoints()} \n\n");
+                    //if (task == "2")
+                        //Console.WriteLine($"\nResult: {Day05.Task2.GetFinalScoreOfLastWinningBoard()} \n\n");
                     break;
                 default:
                     throw new InvalidOperationException("Not a valid input");
