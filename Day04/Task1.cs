@@ -97,7 +97,7 @@ namespace AdventOfCode.Day04
                         Console.WriteLine("\n");
                     }
 
-                    if (CheckHorizontals(board) || CheckVerticals(board))
+                    if (IsWinningBoard(board))
                     {
                         winningBoard = board;
                         break;
@@ -110,6 +110,11 @@ namespace AdventOfCode.Day04
             }
 
             return winningBoard != null ? CalculateFinalScore(winningBoard, currentNum) : 0;
+        }
+
+        public static bool IsWinningBoard(CommonHelpers.ExpandedInt[,] board)
+        {
+            return CheckHorizontals(board) || CheckVerticals(board);
         }
 
         private static bool CheckHorizontals(CommonHelpers.ExpandedInt[,] board)
@@ -141,7 +146,7 @@ namespace AdventOfCode.Day04
                 if (column.All(x => x.marked))
                 {
                     Console.WriteLine("We have a winner column:");
-                    column.ToList().ForEach(n => Console.Write(n.num));
+                    column.ToList().ForEach(n => Console.Write(n.num.ToString(), 2));
                     isFullColumn = true;
                     break;
                 }
@@ -164,7 +169,7 @@ namespace AdventOfCode.Day04
                     .ToArray();
         }
 
-        private static int CalculateFinalScore(CommonHelpers.ExpandedInt[,] board, int currentNum)
+        public static int CalculateFinalScore(CommonHelpers.ExpandedInt[,] board, int currentNum)
         {
             var sumOfUnmarked = 0;
 
