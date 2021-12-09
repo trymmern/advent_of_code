@@ -68,16 +68,16 @@ namespace AdventOfCode.Day05
                     if (line.A.Y < line.B.Y) // A is before B
                     {
                         len = line.B.Y - line.A.Y + 1;
-                        AddAllToPointCount(line, pointCount, len, line.A, Direction.VERTICAL);
+                        AddAllToPointCount(pointCount, len, line.A, Direction.VERTICAL);
                     }
                     else if (line.A.Y > line.B.Y) // B is before A
                     {
                         len = line.A.Y - line.B.Y + 1;
-                        AddAllToPointCount(line, pointCount, len, line.B, Direction.VERTICAL);
+                        AddAllToPointCount(pointCount, len, line.B, Direction.VERTICAL);
                     }
                     else // If A == B
                     {
-                        AddAllToPointCount(line, pointCount, len, line.A, Direction.VERTICAL);
+                        AddAllToPointCount(pointCount, len, line.A, Direction.VERTICAL);
                     }
                 }
                 else if (line.A.Y == line.B.Y) // Horizontal lines
@@ -87,16 +87,16 @@ namespace AdventOfCode.Day05
                     if (line.A.X < line.B.X) // A is before B
                     {
                         len = line.B.X - line.A.X + 1;
-                        AddAllToPointCount(line, pointCount, len, line.A, Direction.HORIZONTAL);
+                        AddAllToPointCount(pointCount, len, line.A, Direction.HORIZONTAL);
                     }
                     else if (line.A.X > line.B.X) // B is before A
                     {
                         len = line.A.X - line.B.X + 1;
-                        AddAllToPointCount(line, pointCount, len, line.B, Direction.HORIZONTAL);
+                        AddAllToPointCount(pointCount, len, line.B, Direction.HORIZONTAL);
                     }
                     else // If A == B
                     {
-                        AddAllToPointCount(line, pointCount, len, line.A, Direction.HORIZONTAL);
+                        AddAllToPointCount(pointCount, len, line.A, Direction.HORIZONTAL);
                     }
                 }
             }
@@ -104,27 +104,41 @@ namespace AdventOfCode.Day05
             return GetOverlapAmount(pointCount);
         }
 
-        private static int GetOverlapAmount(Dictionary<(int x, int y), bool?> pointCount)
+        public static int GetOverlapAmount(Dictionary<(int x, int y), bool?> pointCount)
         {
             return pointCount.Count(x => (bool) x.Value);
         }
 
-        private static void AddAllToPointCount(Line line, Dictionary<(int x, int y), bool?> pointCount, int len, Coordinate start, Direction direction)
+        public static void AddAllToPointCount(Dictionary<(int x, int y), bool?> pointCount, int len, Coordinate start, Direction direction)
         {
-            if (direction == Direction.VERTICAL)
+            switch (direction)
             {
-                for (var i = 0; i < len; i++)
-                {
-                    AddToPointCount(pointCount, new Coordinate { X = start.X, Y = start.Y + i });
-                }
-            }
+                case Direction.VERTICAL:
+                    for (var i = 0; i < len; i++)
+                    {
+                        AddToPointCount(pointCount, new Coordinate { X = start.X, Y = start.Y + i });
+                    }
 
-            if (direction == Direction.HORIZONTAL)
-            {
-                for (var i = 0; i < len; i++)
-                {
-                    AddToPointCount(pointCount, new Coordinate { X = start.X + i, Y = start.Y });
-                }
+                    break;
+                case Direction.HORIZONTAL:
+                    for (var i = 0; i < len; i++)
+                    {
+                        AddToPointCount(pointCount, new Coordinate { X = start.X + i, Y = start.Y });
+                    }
+
+                    break;
+                case Direction.DIAGONAL_POS_Y:
+                    for (var i = 0; i < len; i++)
+                    {
+                        AddToPointCount(pointCount, new Coordinate { X = start.X + i, Y = start.Y + i });
+                    }
+                    break;
+                case Direction.DIAGONAL_NEG_Y:
+                    for (var i = 0; i < len; i++)
+                    {
+                        AddToPointCount(pointCount, new Coordinate { X = start.X + i, Y = start.Y - i });
+                    }
+                    break;
             }
         }
 
@@ -142,7 +156,7 @@ namespace AdventOfCode.Day05
                 pointCount[(countedPoint.Key.x, countedPoint.Key.y)] = true;
         }
 
-        private static Line ConvertRawLine(string rawLine)
+        public static Line ConvertRawLine(string rawLine)
         {
             var coordinates = rawLine.Split(" -> ");
             return new Line
@@ -171,22 +185,18 @@ namespace AdventOfCode.Day05
             public Coordinate B { get; set; }
         }
 
-        //public struct PointCount
-        //{
-        //    public Coordinate Coordinate { get; set; }
-        //    public int Count { get; set; }
-        //}
-
         public struct Coordinate
         {
             public int X { get; set; }
             public int Y { get; set; }
         }
 
-        private enum Direction
+        public enum Direction
         {
             HORIZONTAL,
-            VERTICAL
+            VERTICAL,
+            DIAGONAL_POS_Y, // Growing Y
+            DIAGONAL_NEG_Y // Shrinking Y
         }
     }
 }

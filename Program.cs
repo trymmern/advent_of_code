@@ -47,8 +47,16 @@
                     task = Console.ReadLine();
                     if (task == "1")
                         Console.WriteLine($"\nResult: {Day05.Task1.GetNumberOfOverlappingPoints()} \n\n");
-                    //if (task == "2")
-                        //Console.WriteLine($"\nResult: {Day05.Task2.GetFinalScoreOfLastWinningBoard()} \n\n");
+                    if (task == "2")
+                        Console.WriteLine($"\nResult: {Day05.Task2.GetNumberOfOverlappingPoints()} \n\n");
+                    break;
+                case "6":
+                    Console.WriteLine("Choose task (type '1' or '2')");
+                    task = Console.ReadLine();
+                    if (task == "1")
+                        Console.WriteLine($"\nResult: {Day06.Task1.GetLanternfishPopulation(80)} \n\n");
+                    if (task == "2")
+                        Console.WriteLine($"\nResult: {Day06.Task2.GetLanternfishPopulation(256)} \n\n");
                     break;
                 default:
                     throw new InvalidOperationException("Not a valid input");
