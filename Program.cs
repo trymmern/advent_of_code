@@ -66,6 +66,14 @@
                     if (task == "2")
                         Console.WriteLine($"\nResult: {Day07.Task2.GetFuelConsumption()} \n\n");
                     break;
+                case "8":
+                    Console.WriteLine("Choose task (type '1' or '2')");
+                    task = Console.ReadLine();
+                    if (task == "1")
+                        Console.WriteLine($"\nResult: {Day08.Task1.GetUniqueDigitCount()} \n\n");
+                    if (task == "2")
+                        Console.WriteLine($"\nResult: {Day07.Task2.GetFuelConsumption()} \n\n");
+                    break;
                 default:
                     throw new InvalidOperationException("Not a valid input");
             }
