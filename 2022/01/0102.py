@@ -1,4 +1,4 @@
-f = open("01-input.txt", "r")
+f = open("input.txt", "r")
 
 max: list[int] = [0,0,0];
 counter = 0;

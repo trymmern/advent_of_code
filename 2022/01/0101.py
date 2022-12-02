@@ -1,4 +1,4 @@
-f = open("01-input.txt", "r")
+f = open("input.txt", "r")
 
 max = 0;
 counter = 0;
