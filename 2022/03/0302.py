@@ -3,7 +3,6 @@ f = open("input.txt", "r")
 
 def main ():
     values = getValues()
-    print(values)
     score = 0;
     group: list[str] = [];
     for x in f:
@@ -11,8 +10,6 @@ def main ():
         if (len(group) < 3):
             continue;
         common = list(set(group[0])&set(group[1])&set(group[2]));
-        print(group);
-        print(common);
         for l in common:
             score += values[l];
         group.clear();
