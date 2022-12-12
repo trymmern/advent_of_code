@@ -1,15 +1,14 @@
 import sys
-from math import prod
+from math import prod, lcm
 
 f = open("input.txt", "r")
-sys.set_int_max_str_digits(10000000)
 
 def main():
     current = 0
     monkeys: list[list[float]] = fill_monkeys()
     inspections: list[int] = [0]*8
     receivers: list(list[int]) = fill_receivers()
-    mod = 1
+    mod = lcm(11,5,19,13,7,17,2,3)
     for r in range(10000):
         f.seek(0,0)
         for l in f:
@@ -26,7 +25,7 @@ def main():
             if cmd[0] == "Operation:":
                 for i in range(len(monkeys[current])):
                     op = l[17:].split()
-                    monkeys[current][i] = operation(monkeys[current][i], op)
+                    monkeys[current][i] = operation(monkeys[current][i], op) % mod
                     inspections[current] += 1
             
             if cmd[0] == "Test:":
