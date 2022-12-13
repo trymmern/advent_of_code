@@ -1,5 +1,4 @@
 from ast import literal_eval
-from functools import cmp_to_key
 
 f = open("input.txt", "r")
 
@@ -22,8 +21,7 @@ def main():
             right = literal_eval(l)
             packets.append(right)
     
-    #packets = bubble_sort(packets)
-    packets.sort(key=cmp_to_key(check_packets), reverse=True)
+    packets = bubble_sort(packets)
 
     index1 = packets.index(decoder_key1) + 1
     index2 = packets.index(decoder_key2) + 1
@@ -31,12 +29,11 @@ def main():
     print(index1, index2)
     print("Answer: ", index1 * index2)
 
-# Didnt work so I just used cmp
 def bubble_sort(packets: list) -> list:
     j = 0
     for i in range(len(packets)-1):
         for j in range(0, len(packets)-i-1):
-            if check_packets(packets[j], packets[j + 1]) > 0:
+            if check_packets(packets[j], packets[j + 1]) <= 0:
                 packets[j], packets[j + 1] = packets[j + 1], packets[j]
 
     return packets
