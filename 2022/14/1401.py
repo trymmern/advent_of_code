@@ -6,11 +6,13 @@ f = open("input.txt", "r")
 start = (500,0)
 def main():
     m = fill_matrix()
-    m[start[1], start[0]] = 2
+    # m[start[1], start[0]] = 2
     keep_falling = True
     sand = 0
 
     while keep_falling:
+        # if sand == 200:
+        #     keep_falling = False
         if check_sand(m):
             sand += 1
         else:
@@ -23,26 +25,34 @@ def main():
     pyplot.show()
 
 def check_sand(m) -> bool:
-    can_move = True
-    while can_move:
-        max_y = get_lowest(m, start[0], start[1])
-        
-        if max_y == -1: return False
-
-
+    final = get_lowest(m, start[0], start[1])
+    if final == -1: return False
+    else:
+        m[final[1]][final[0]] = 2
+        return True
         
 def get_lowest(m: np.ndarray, x: int, y: int):
     for i in range(y, len(m)):
-        if i >= len(m): return -1 # Found void
-        elif m[i+1][x] == 1: # Found wall
-            if can_move_left(x, i):
-            elif can_move_right(x, i): 
-            ## TODO: check if can move left or right and move and recurse until it cant no mo
+        if m[i][x] in (1, 2): # Found wall or sand
+            if can_move_left(m, x, i-1):
+                return get_lowest(m, x-1, i)
+            elif can_move_right(m, x, i-1):
+                return get_lowest(m, x+1, i)
+            else:
+                return (x, i-1) # final spot of sand grain
+    print("found void")
+    return -1
 
+def can_move_left(m: np.ndarray, x: int, y: int):
+    return m[y+1][x-1] not in (1, 2)
+
+def can_move_right(m: np.ndarray, x: int, y: int):
+    return m[y+1][x+1] not in (1, 2)
 
 def fill_matrix() -> np.ndarray:
     m = np.array([])
     x, y = get_matrix_size()
+    print(x, y)
     for _ in range(y+1):
         row = [[0]*(x+1)]
         if len(m) < 1:
@@ -52,20 +62,18 @@ def fill_matrix() -> np.ndarray:
     
     f.seek(0,0)
     for l in f:
-        l = l.strip()
-        c = get_coordinates(l)
-        for i in range(1, len(c)):
-            coords = c[i].split(",")
-            x, y = (int(coords[0]), int(coords[1]))
-            prev_x, prev_y = (int(c[i-1].split(",")[0]), int(c[i-1].split(",")[1]))
+        P = [x.split(",") for x in l.strip().split("->")]
+        points = [(int(x[0]), int(x[1])) for x in P]
+        
+        for p1, p2 in zip(points, points[1:]):
+            x1, y1 = p1
+            x2, y2 = p2
 
-            if prev_x == x: # vertical
-                for i in range(prev_y, y):
-                    m[i][x] = 1
-            elif prev_y == y: # horizontal
-                for i in range(prev_x, x):
-                    m[y][i] = 1
-            m[y][x] = 1
+            for x in range(min(x1, x2), max(x1, x2) + 1):
+                m[y1][x] = 1
+            
+            for y in range(min(y1, y2), max(y1, y2) + 1):
+                m[y][x1] = 1
     return m
 
 def get_matrix_size():
