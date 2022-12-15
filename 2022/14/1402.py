@@ -29,9 +29,17 @@ def main():
     sand = sum(v == 2 for v in cave.values())
     print(sand)
 
+    m = np.zeros((max_y(cave)+1, 1000))
+    for c in cave:
+        x, y = c
+        m[y][x] = cave[(x, y)]
+
+    pyplot.imshow(m)
+    pyplot.show()
+
 def add_floor(cave):
     y = max_y(cave) + 2
-    for x in range(-1000, 1001):
+    for x in range(-600, 1000):
         cave[(x, y)] = 1
 
 def max_y(cave):
@@ -51,6 +59,5 @@ def sand_falling(cave):
             cave[(x, y)] = 2
             return (x, y) != (500, 0)
     return False
-
 
 main()
