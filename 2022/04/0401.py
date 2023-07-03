@@ -7,11 +7,9 @@ def main():
 
         x1_start, x1_end = map(int, x1.split("-"))
         x2_start, x2_end = map(int, x2.split("-"))
-        print(x1, x2)
 
         if x2_start <= x1_start and x1_end <= x2_end or (x1_start <= x2_start and x2_end <= x1_end):
             score += 1;
-            print("SCORE UPDATED. NEW SCORE: ", score)
 
     print(score);
 
