@@ -5,7 +5,6 @@ f = open("input.txt", "r").read().strip()
 t, d = f.strip().split('\n')
 t = [int(x) for x in t.split(':')[1].split()]
 d = [int(x) for x in d.split(':')[1].split()]
-print(t, d)
 
 games = []
 for i in range(len(t)):
@@ -21,4 +20,5 @@ for g in games:
         if D > d:
             count += 1
     S.append(count)
+    
 print(np.prod(S))
