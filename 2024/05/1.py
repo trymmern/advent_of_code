@@ -1,4 +1,4 @@
-f = open("input_ex.txt", "r")
+f = open("input.txt", "r")
 
 rules = []
 isValid = True
@@ -19,7 +19,7 @@ for l in f:
         for r1, r2 in rules:
             if U[i] not in [r1, r2] or U[i-1] not in [r1, r2]:
                 continue
-            if r2 == U[i] and r1 in U[i:]:
+            if (r2 == U[i] and r1 in U[i:]) or (r1 == U[i] and r2 in U[:i]):
                 isValid = False
                 break
         if not isValid: break
@@ -27,6 +27,6 @@ for l in f:
     if isValid:
         M.append(U[int((len(U)/2)-.5)])
 
-# print(rules)
+print(rules)
 print(M)
 print(sum(M))

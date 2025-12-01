@@ -1,6 +1,6 @@
 import numpy as np
 
-f = open("input_ex.txt", "r")
+f = open("input.txt", "r")
 
 M = []
 for l in f:
